@@ -1,4 +1,31 @@
+Machine Learning
+→ Learning from data to make predictions or decisions.
 
+Feature
+→ Input information used by the model.
+
+Label
+→ The known/correct output in supervised learning.
+
+Training
+→ The process where the model learns from data.
+
+Trained Model
+→ A model that has learned patterns from training data.
+
+Inference
+→ Using the trained model to make predictions on new data.
+
+Supervised Learning
+→ Learning from labeled data.
+
+Unsupervised Learning
+→ Finding patterns/relationships in unlabeled data.
+
+Reinforcement Learning
+→ Learning through actions and feedback/rewards.
+
+-------------------------------------------------------------cases-------------------------------------------------------------
 Reinforcement Learning (RL) is a branch of Machine Learning where an agent learns to perform actions in an environment to maximize a cumulative reward. 
 In the context of autonomous car driving, the car is the agent, the road and its surroundings form the environment,
 and the reward might be related to safe and efficient navigation, obeying traffic rules, and reaching the desired destination.
