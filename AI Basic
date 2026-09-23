@@ -1,0 +1,26 @@
+
+Reinforcement Learning (RL) is a branch of Machine Learning where an agent learns to perform actions in an environment to maximize a cumulative reward. 
+In the context of autonomous car driving, the car is the agent, the road and its surroundings form the environment,
+and the reward might be related to safe and efficient navigation, obeying traffic rules, and reaching the desired destination.
+
+Speech-to-text Conversion
+Explanation: This task involves converting spoken language or speech into written text. It's commonly referred to as automatic speech recognition (ASR) 
+or speech-to-text conversion. Speech-related AI algorithms process audio recordings of spoken words and transcribe them into textual form.
+
+Unsupervised Machine Learning
+Explanation: The unsupervised machine learning algorithms extracts trends from data. In contrast, supervised learning (option a) 
+involves using labeled data to train algorithms to predict outcomes or classify data, and reinforcement learning (option c) focuses
+on training agents to make sequences of decisions through trial and error to maximize rewards. Natural Language Processing 
+(option d) is a field within machine learning that deals with processing and understanding human language. While NLP can be used 
+to extract trends and insights from text data, it's not a type of machine learning algorithm in the same sense as the other options.
+
+Writing a poem based on a given theme
+Explanation: Writing a poem based on a given theme is an example of a Generative AI task. Generative AI refers to AI systems that can 
+generate creative content, such as text, images, music, and more. In this case, the AI is given a theme or a prompt and then generates 
+a new piece of creative writing, which is the poem.
+
+Repair damaged images
+Explanation: While image restoration and repair do involve working with images, it's not a typical vision task in the sense of 
+identifying objects, classifying images, or facial recognition. While AI can certainly be used for image restoration, it's not 
+one of the core tasks directly related to vision or image-related AI.
+
