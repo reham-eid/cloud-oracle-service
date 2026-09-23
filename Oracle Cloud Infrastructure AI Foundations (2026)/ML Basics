@@ -1,0 +1,28 @@
+
+Sigmoidal function to predict the probability of binary outcome.
+Explanation: Logistic Regression is a binary classification algorithm commonly used in Machine Learning to predict binary outcomes,
+such as whether a loan will be defaulted or not. The key idea behind Logistic Regression is to model the probability of an event 
+occurring as a function of input features. The output of this model is transformed using the sigmoidal (also known as logistic) function. 
+The sigmoidal function, often represented as the sigmoid function, has an S-shaped curve that maps any input value to an output value between 0 and 1.
+
+
+Password Validation
+Explanation: Password Validation (option a) typically does not require a Machine Learning solution. Password validation is a straightforward process
+that involves checking whether a user-entered password matches the stored password on a server. This can be achieved through standard cryptographic techniques and rules without the need for machine learning.
+
+Reinforcement learning
+Explanation: Reinforcement Learning (option c) is a type of Machine Learning algorithm that learns from outcomes to make decisions.
+In reinforcement learning, an agent interacts with an environment and takes actions to maximize cumulative rewards.
+
+ Linear Regression
+Explanation: Linear Regression is a regression algorithm used for predicting continuous numerical values by modeling the relationship
+between dependent and independent variables using a straight line. Logistic Regression is actually a classification algorithm used for
+binary classification. Decision Tree Classification is also used for classification tasks, not regression. K-Means Clustering is an 
+unsupervised learning algorithm used for clustering data points, not for regression.
+
+
+
+ Regression.
+Explanation: Regression (option a) is the type of Machine Learning algorithm used when we want to predict continuous numerical values, such as the resale price of a residential property. 
+In regression tasks, the goal is to learn a mapping between input features (e.g., square footage, number of bedrooms, location) and a continuous target variable (e.g., price). Linear Regression is most employed for this purpose.
+
