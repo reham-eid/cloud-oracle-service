@@ -1,5 +1,5 @@
 Deep Learning can automatically learn useful features from raw data.  
-
+==========================================================ANN==========================================================
 ANN = Artificial Neural Network ,  They are made up of interconnected nodes called Neurons  
 
 the function of each Neuron   : 
@@ -39,6 +39,7 @@ Backpropagation
 Adjust Weights
  ↓
 Repeat training → Better predictions 
+
 *******************************************
 Selecting the right deep learning algorithm based on the data and application is important. 
 
@@ -66,6 +67,8 @@ are available choice.
 So let us understand what is Artificial Neural Network, or ANN. Artificial neural networks are inspired by the human brain. 
 They are made up of interconnected nodes called as neurons. Let us get a simplified understanding of how inputs are processed by a neuron.
 *******************************************
+
+==========================================================RNN==========================================================
 Sequential data is data where the order of the elements matters.  Examples include:
  Text 
  Speech 
@@ -74,8 +77,8 @@ Sequential data is data where the order of the elements matters.  Examples inclu
  Financial time series 
  Hand gestures 
 
-
-RNN = Recurrent Neural Network. RNNs are designed to process sequential data because they maintain an internal hidden state, 
+RNN = Recurrent Neural Network. 
+RNNs are designed to process sequential data because they maintain an internal hidden state, 
 which carries information from previous time steps.  
 
 For example:
@@ -92,15 +95,8 @@ The key idea is:
 RNNs use information from previous steps to help process the current step.
 *******************************************
 RNNs can be used with different input-output patterns:
-
-
-
 1-One-to-One 
-2-One-to-Many 
-e.g. :  Music generation Input 
- ↓
-Note 1 → Note 2 → Note 3 → Note 4 → ...
-
+2-One-to-Many e.g. :  Music generation Input 
 3-Many-to-One e.g. sentiment analysis based on the review.  
 4-Many-to-Many  e.g. Machine Translation  
 
@@ -121,4 +117,73 @@ Input Gate: Decides what new information to store
 Output Gate: Decides what information to output 
 
 Key idea: LSTM controls what information to forget, remember, and output over time.
+
+==========================================================CNN==========================================================
+A Convolutional Neural Network (CNN) is a deep learning model designed mainly for grid-like data such as images and videos.
+
+Unlike a traditional ANN, which may flatten an image into a one-dimensional array, a CNN is designed to work with the spatial structure of image data.
+
+The main CNN flow is:
+
+Input Image → Convolution → ReLU → Pooling → Feature Extraction → Classification → Output
+
+Input Layer: receives the image data.
+Convolutional Layer: uses filters (known as kernels) to detect local features such as edges, corners, lines, and patterns.
+ReLU(Rectified Linear Unit): applies an activation function and helps the network learn complex patterns AND  nonlinear relationships in the data.
+Pooling Layer: reduces the size of the feature maps while keeping important information. reduces the spatial dimensions of feature maps while keeping important information. It makes the data smaller and easier to process.
+Softmax: converts the outputs of the final fully connected layer into probability scores for each class. The class with the highest probability becomes the predicted class.
+Dropout: is a regularization technique used during training to reduce overfitting. It temporarily disables some neurons so the network does not rely too much on specific neurons and can generalize better to new data.
+Feature Extraction Layers: repeated combinations of convolution, ReLU, and pooling learn increasingly complex features.
+Fully Connected / Classification Layers: use the extracted features to determine the class of the image.
+
+The key idea is:
+Pixels → Edges → Shapes → Complex Features → Object/Class
+
+So, CNNs are effective for images because they preserve and use spatial relationships between pixels while automatically learning useful features.
+**********************************
+CNNs have several limitations:
+
+1-Computational cost: Training CNNs on large datasets can require significant computing resources and time.
+2-Overfitting: CNNs can overfit, especially when training data is limited or imbalanced.
+3-Black-box nature: CNNs can be difficult to interpret because their internal decision-making process is complex.
+4-Sensitivity to input changes: Small changes in the input can sometimes lead to different or unstable predictions.
+
+CNNs have many important applications:
+│
+├── Image Classification
+│      → What?
+│
+├── Object Detection
+│      → What + Where?
+│
+├── Image Segmentation
+│      → Which pixels?
+│
+├── Face Recognition
+│
+├── Medical Image Analysis
+│
+├── Self-Driving Cars
+│
+└── Satellite / Remote Sensing
+==========================================================QUESTIONS==========================================================
+Neuron
+Explanation: A neuron in an Artificial Neural Network is the fundamental building block responsible for performing weighted summation and applying an activation function to input data to produce an output.
+
+Recurrent Neural Networks
+Explanation: Recurrent Neural Networks (RNNs) are a type of neural network architecture that includes feedback connections. These feedback connections
+allow RNNs to process sequential data, such as time series, natural language, speech, and more.
+
+ Long Short-Term Memory Neural Networks
+Explanation: Long Short-Term Memory (LSTM) Neural Networks are the sequence model of choice when it comes to handling and maintaining relevant information
+over long sequences, making them particularly well-suited for tasks like language modeling, machine translation, and speech recognition.
+
+Machine Translation involves translating a sentence or a sequence of text from one language to another, which is essentially a sequence-to-sequence problem. 
+In Many-to-Many RNN architecture, the network takes 
+a sequence of inputs and produces a sequence of outputs. In the context of machine translation, this means it can take a sequence of words or tokens 
+in one language as input and generate a corresponding sequence of words or tokens in another language as output.
+
+Enabling the network to learn complex features like edges and shapes
+Explanation: Hidden layers in neural networks are crucial for character recognition because they enable the network to learn and extract complex features
+and patterns, such as edges, shapes, and curves, which are essential for recognizing characters.
 
