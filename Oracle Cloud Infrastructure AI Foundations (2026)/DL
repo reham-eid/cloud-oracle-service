@@ -1,0 +1,124 @@
+Deep Learning can automatically learn useful features from raw data.  
+
+ANN = Artificial Neural Network ,  They are made up of interconnected nodes called Neurons  
+
+the function of each Neuron   : 
+neuron receive inputs.
+Each input is associated with a weight.
+
+Input 1 ── weight ──┐
+Input 2 ── weight ──┤
+Input 3 ── weight ──┤
+                    ↓
+              Weighted Sum
+                    +
+                  Bias
+                    ↓
+             Activation Function
+                    ↓
+                 Output
+
+Weights control the strength of connections.
+Bias adds flexibility to the neuron.
+
+*******************************************
+HOW ANN   Learn? from Error , if it's predict wrong will use Backpropagation  to adjust the weights based on the error
+
+Image
+ ↓
+Neural Network
+ ↓
+Prediction = 6
+ ↓
+Compare with Actual = 2
+ ↓
+Error
+ ↓
+Backpropagation
+ ↓
+Adjust Weights
+ ↓
+Repeat training → Better predictions 
+*******************************************
+Selecting the right deep learning algorithm based on the data and application is important. 
+
+For image tasks like
+ image classification, object detection, image segmentation, or facial recognition, 
+→   CNN (Convolutional Neural Network) is a suitable architecture.
+
+For text, we have a choice of :
+→    transformers 
+or 
+→   LSTM (Long Short-Term Memory) 
+or 
+→   RNN (Recurrent Neural Network  ) 
+**RNNs and LSTMs are designed to handle sequential data, while Transformers are widely used for modern NLP tasks**
+
+For a generative task like text summarization, question answering 
+ →   transformers : are an architecture used to build many modern LLMs(Large Language Model) 
+
+For generating images, text-to-image generation
+→   transformers
+→   GANs (Generative Adversarial Networks  )
+are available choice.
+
+
+So let us understand what is Artificial Neural Network, or ANN. Artificial neural networks are inspired by the human brain. 
+They are made up of interconnected nodes called as neurons. Let us get a simplified understanding of how inputs are processed by a neuron.
+*******************************************
+Sequential data is data where the order of the elements matters.  Examples include:
+ Text 
+ Speech 
+ Music 
+ Weather data 
+ Financial time series 
+ Hand gestures 
+
+
+RNN = Recurrent Neural Network. RNNs are designed to process sequential data because they maintain an internal hidden state, 
+which carries information from previous time steps.  
+
+For example:
+
+Input 1 → RNN → Hidden State 1
+                    ↓
+Input 2 → RNN → Hidden State 2
+                    ↓
+Input 3 → RNN → Hidden State 3
+                    ↓
+Input 4 → RNN → Output
+
+The key idea is:
+RNNs use information from previous steps to help process the current step.
+*******************************************
+RNNs can be used with different input-output patterns:
+
+
+
+1-One-to-One 
+2-One-to-Many 
+e.g. :  Music generation Input 
+ ↓
+Note 1 → Note 2 → Note 3 → Note 4 → ...
+
+3-Many-to-One e.g. sentiment analysis based on the review.  
+4-Many-to-Many  e.g. Machine Translation  
+
+RNNs are designed for sequential data, but they can struggle with long-term dependencies because of the vanishing gradient problem.
+
+Vanishing gradient: 
+Gradient becomes very small during training.
+The model struggles to learn from information that occurred many time steps earlier.
+
+
+LSTM(Long Short-Term Memory): is a type of RNN designed to handle long-term dependencies better. It uses a cell state 
+
+Cell State: Main memory path in LSTM
+
+and three gates:  
+Forget Gate: Decides what old information to discard
+Input Gate: Decides what new information to store
+Output Gate: Decides what information to output 
+
+Key idea: LSTM controls what information to forget, remember, and output over time.
+
