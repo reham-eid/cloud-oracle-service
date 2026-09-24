@@ -1,0 +1,39 @@
+Overview of deep learning model architectures.
+
+What is my data?
+        ↓
+ ┌──────┼────────┬───────────┐
+Image  Sequence  Compressed  Text
+ ↓       ↓          data       ↓
+CNN     RNN       Autoencoder Transformer
+         ↓
+        LSTM
+
+
+| Architecture    |  the main idea                                |
+| --------------- | --------------------------------------------- |
+| **FNN / MLP**   | Basic feedforward neural network              |
+| **CNN**         | Images → learns local patterns                |
+| **RNN**         | Sequential data → uses hidden state           |
+| **Autoencoder** | Encode/compress → reconstruct                 |
+| **LSTM**        | RNN variant → long-term dependencies          |
+| **GAN**         | Generate data using Generator + Discriminator |
+| **Transformer** | Modern NLP → many LLMs                        |
+
+
+The first one is Feedforward Neural Networks FNN: This is also called as Multilayer Perceptron(MLP)
+is the simplest form of neural networks. 
+
+CNN, which is Convolutional Neural Network. This can automatically detect and learn local patterns and features in images and videos.
+
+RNN, which is a Recurrent Neural Network. RNN are designed to handle sequential data such as time-series data or natural language. 
+They have a feedback loop that allows them to maintain hidden states and capture temporal dependencies. The fourth one is autoencoders.
+
+Autoencoders are unsupervised learning models used for feature extraction and dimensionality reduction and is commonly employed in data compression and anomaly detection.
+
+LSTM, that is Long Short-Term Memory. LSTM is a specialized RNN variant designed to handle long-term dependencies in sequential data. 
+
+GAN, which is Generative Adversarial Network. This is a powerful deep learning model which is used for generating realistic synthetic data such as images, audio, and text. 
+And the last one is transformers. 
+
+Transformers are widely used in natural language processing and have become "state of the art" models for tasks like machine translation, text generation, and language understanding.
