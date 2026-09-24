@@ -1,0 +1,162 @@
+##Large Language Models
+A language model is a probabilistic model that predicts the probability of the next token based on the previous context.
+The large in the large language model refers to the number of parameters.
+
+For example:
+
+“They sent me a ___”
+
+The model produces a probability distribution over its vocabulary:
+
+dog → 0.45
+cat → 0.20
+lion → 0.03
+elephant → 0.02
+etc.
+
+The model can assign probabilities to the tokens in its vocabulary. It then selects a token according to the generation strategy. In the simplified example from the lesson, the token with the highest probability is selected.
+
+The selected token is added to the input, and the model predicts the next token again:
+
+Predict → Append token → Predict again → Repeat
+
+When the model generates EOS (End of Sequence), generation stops.
+*************************************
+
+Modern LLMs are largely based on the Transformer architecture, which uses attention mechanisms to process contextual relationships between parts of the input.
+
+LLMs can be used for:
+
+Question answering
+Text generation
+Translation
+Summarization
+Sentiment analysis
+Other NLP tasks
+
+The key relationship is:   AI → Machine Learning → Deep Learning → Neural Networks → Transformers → LLMs
+
+And the most important idea from this lesson is:
+An LLM generates text by repeatedly predicting the next token based on the context, using learned parameters from large-scale training data.
+
+
+================================================================Transformer================================================================
+is a Deep learning architecture widely used for modern NLP/LLMs
+A key mechanism in Transformers is Self-Attention. Self-Attention helps the model determine the relevance and relationships between words or tokens within the same sequence. 
+This allows the model to build a better understanding of the context.
+
+The original Transformer architecture contains two main components:
+Encoder → Decoder
+
+The Encoder processes the input text and converts it into numerical representations called vectors. These vectors capture contextual information about the input.
+The Decoder uses these encoded representations to generate the output text.
+
+             TRANSFORMER
+                  │
+       ┌──────────┴──────────┐
+       ↓                     ↓
+    ENCODER                DECODER
+       │                     │
+   Multiple Layers       Multiple Layers
+       │                     │
+ Self-Attention         Attention mechanisms
+       │                     │
+       └──────────┬──────────┘
+                  ↓
+             Output Text
+
+| Term                       | Meaning                                                                                 |
+| -------------------------- | --------------------------------------------------------------------------------------- |
+| **Self-Attention**         | Determines relevance/relationships between elements within the same sequence            |
+| **Attention**              |helps a model focus on the most relevant parts of the input when processing information. |
+| **Encoder**                | Processes input and produces contextual representations                                 |
+| **Decoder**                | Uses representations to generate output                                                 |
+| **Vector**                 | Numerical representation                                                                |
+| **Contextual Information** | Information represented according to surrounding context                                |
+| **Layer**                  | Processing stage inside the neural network                                              |
+
+
+******************************************Tokens & Embeddings in LLMs******************************************
+Token: A unit of text that can be a word, part of a word, or punctuation.
+Tokenization: The process of breaking text into tokens.
+Embedding: A numerical representation of a piece of text. Embeddings help computers represent and work with relationships between pieces of text.
+Vector: A numerical representation consisting of a set of values.
+
+
+Text "They sent me a"
+       ↓
+ Tokenization
+       ↓
+They | sent | me | a  --these are Tokens
+       ↓
+    Encoder
+       ↓
+Embeddings / Vector representation for each token
+       ↓
+Transformer
+       ↓
+Prediction / Generation
+
+EXPLAIN : 
+Large Language Models process tokens rather than words.
+
+A token can be:
+
+an entire word,
+part of a word,
+or a punctuation symbol.
+
+For example:
+
+apple → [apple]
+friendship → [friend] [ship]
+
+The exact tokenization depends on the tokenizer and its vocabulary.
+Tokenization is the process of breaking text into tokens.
+After tokenization, the tokens can be converted into numerical representations called vectors.
+These representations are called embeddings when they represent a piece of text such as a word, phrase, sentence, or paragraph.
+
+--------DIVE DEEP
+An Encoder Model can convert a sequence of words or tokens into a numerical embedding, also called a vector representation.
+
+These embeddings can be used by other models for tasks such as classification, but an important modern use is semantic search.
+
+In semantic search, documents are converted into embeddings and stored in a vector database:
+
+Documents
+   ↓
+Encoder
+   ↓
+Embeddings
+   ↓
+Vector Database
+
+When a user sends a query, the query is also converted into an embedding. The system compares the query embedding with the document embeddings and retrieves the most similar or relevant documents.
+
+User Query
+   ↓
+Query Embedding
+   ↓
+Similarity Search
+   ↓
+Relevant Documents
+
+The retrieved content can then be sent to an LLM, which uses the retrieved information together with its learned general knowledge to generate an answer.
+
+This architecture is called RAG — Retrieval-Augmented Generation.
+
+The key flow is:
+
+Query → Embedding → Similarity Search → Relevant Documents → LLM → Answer
+
+The most important idea is:
+
+Embeddings are critical to RAG because they help the system retrieve information based on semantic meaning.
+------------------------------------
+
+
+encoder-only models  > like semantic search.
+decoder-only models  > like text generation.
+encoder-decoder models  > like machine translation.
+
+
