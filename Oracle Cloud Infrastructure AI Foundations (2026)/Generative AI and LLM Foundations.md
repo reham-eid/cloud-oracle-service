@@ -117,7 +117,7 @@ After tokenization, the tokens can be converted into numerical representations c
 These representations are called embeddings when they represent a piece of text such as a word, phrase, sentence, or paragraph.
 
 --------DIVE DEEP
-transformer architecture basically has two submodules, an encoder and a decoder.
+transformer architecture basically has *two* submodules, an encoder and a decoder.
 
 An Encoder Model can convert a sequence of words or tokens into a numerical embedding, also called a vector representation.
 
