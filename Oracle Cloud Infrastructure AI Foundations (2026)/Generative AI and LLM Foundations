@@ -42,7 +42,8 @@ An LLM generates text by repeatedly predicting the next token based on the conte
 
 ================================================================Transformer================================================================
 is a Deep learning architecture widely used for modern NLP/LLMs
-A key mechanism in Transformers is Self-Attention. Self-Attention helps the model determine the relevance and relationships between words or tokens within the same sequence. 
+A key mechanism in Transformers is Self-Attention. 
+Self-Attention helps the model determine the relevance and relationships between words or tokens within the same sequence. 
 This allows the model to build a better understanding of the context.
 
 The original Transformer architecture contains two main components:
@@ -118,8 +119,14 @@ These representations are called embeddings when they represent a piece of text 
 
 --------DIVE DEEP
 transformer architecture basically has *two* submodules, an encoder and a decoder.
+Both the encoder and the decoder consist of many layers connected by the self-attention mechanism.
 
 An Encoder Model can convert a sequence of words or tokens into a numerical embedding, also called a vector representation.
+And then the decoder module takes these encoded vectors and generates the output text.
+**in another word**
+Encoder reads the input text, encodes it into embeddings that capture the meaning of the input text.
+And then the decoder uses these embeddings to generate the output text at a high level. 
+
 
 These embeddings can be used by other models for tasks such as classification, but an important modern use is semantic search.
 
@@ -133,7 +140,8 @@ Embeddings
    ↓
 Vector Database
 
-When a user sends a query, the query is also converted into an embedding. The system compares the query embedding with the document embeddings and retrieves the most similar or relevant documents.
+When a user sends a query, the query is also converted into an embedding. The system compares the query embedding with 
+the document embeddings and retrieves the most similar or relevant documents.
 
 User Query
    ↓
@@ -143,22 +151,21 @@ Similarity Search
    ↓
 Relevant Documents
 
-The retrieved content can then be sent to an LLM, which uses the retrieved information together with its learned general knowledge to generate an answer.
+
+The retrieved content can then be sent to an LLM, which uses the retrieved information together 
+with its learned general knowledge to generate an answer.
 
 This architecture is called RAG — Retrieval-Augmented Generation.
 
 The key flow is:
-
 Query → Embedding → Similarity Search → Relevant Documents → LLM → Answer
 
 The most important idea is:
-
 Embeddings are critical to RAG because they help the system retrieve information based on semantic meaning.
 ------------------------------------
 
-
 encoder-only models  > like semantic search.
-decoder-only models  > like text generation.
+decoder-only models  > like text generation.(decoder only produces a single token at a time)
 encoder-decoder models  > like machine translation.
 
 
