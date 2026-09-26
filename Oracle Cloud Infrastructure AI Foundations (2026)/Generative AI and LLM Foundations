@@ -168,4 +168,69 @@ encoder-only models  > like semantic search.
 decoder-only models  > like text generation.(decoder only produces a single token at a time)
 encoder-decoder models  > like machine translation.
 
+******************************************HOW to perform the language task that the user wants? ******************************************
+A pretrained LLM is originally trained mainly to predict the next token. However, users want the model to follow instructions, 
+such as translating, summarizing, explaining, or answering questions.
+
+and this is wha we have *Instruction tuning*
+
+Instruction tuning addresses this by Fine-tuning a pretrained LLM on instruction-and-desired-output pairs to improve instruction following.
+
+Instruction → Desired Output
+
+The goal is to make the model better at following user instructions.
+
+A simplified process is:
+
+Pretraining
+    ↓
+Foundation Model
+    ↓
+Instruction Tuning
+    ↓
+Better Instruction Following
+
+
+RLHF (Reinforcement Learning from Human Feedback): is another alignment technique.uses human preferences/feedback to further align model behavior.
+human preferences are used to train a *reward model*, which learns patterns in human preferences. 
+The reward signal is then used during further training to improve model behavior.
+
+
+================================================================Prompt Engineering================================================================
+2 strategies for generating prompts :
+he first one is in-context learning and also few-shot prompting.
+
+
+| Term                    | Meaning                                                                                      |
+| ----------------------- | -------------------------------------------------------------------------------------------- |
+| **Prompt**              | Input given to an LLM                                                                        |
+| **Prompt Engineering**  | Designing/refining prompts to get desired responses                                          |
+| **In-Context Learning** | Giving instructions/examples inside the prompt without changing model parameters             |
+| **Zero-shot**           | 0 examples                                                                                   |
+| **One-shot**            | 1 example                                                                                    |
+| **Few-shot**            | Several examples                                                                             |
+| **K-shot**              | K examples                                                                                   |
+| **Chain-of-Thought**    | Encouraging step-by-step reasoning for complex tasks                                         |
+| **Hallucination**       | False, unsupported, or ungrounded generated content                                          |
+| **RAG**                 | Retrieves relevant information and provides it to the LLM to help generate a grounded answer |
+
+Retrieval-Augmented Generation (RAG) can help reduce hallucinations by retrieving relevant information and providing it 
+to the LLM before generating the answer. However, RAG does not guarantee zero hallucinations.
+
+
+
+================================================================Questions================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
 
