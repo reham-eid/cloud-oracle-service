@@ -10,3 +10,39 @@ and Tag keeps the original word while adding a tag to indicate that it is profan
 
 Key idea:
 Normalization changes the representation of the text; profanity filtering controls how inappropriate words appear in the output.
+
+====================================================questions====================================================
+
+correct. Object Detection
+Explanation: Object Detection is a computer vision task that involves identifying and locating objects within an image. 
+It not only recognizes the presence of objects but also provides information about their location in the image through 
+the use of bounding boxes. Each bounding box represents the position and size of a detected object within the image.
+
+
+Correct. Text sentiment analysis
+Explanation: OCI Language Service is a natural language processing (NLP) service. This service allows you to analyze text data and determine the sentiment or
+emotional tone expressed in the text. It identifies the sentiment of the text - and not just one sentiment for the entire block of text, 
+but the different sentiments for different aspects.
+
+
+Incorrect.
+Correct Answer: Mandarin 
+Explanation: OCI Speech Supports English, Spanish, and Portuguese
+
+ Incorrect.
+Correct Answer: Vision
+Explanation: You can organize and extract text and structure from image-based documents and PDFs 
+by calling the Document AI pretrained models with a single request in OCI Vision.
+
+
+--search for this book
+Oracle Cloud Infrastructure AI Foundations: Hands-on Workshop (Activity Guide)
+
+https://www.koenig-solutions.com/CourseContent/custom/2025311441-D1109314GC10toc.pdf
+
+
+
+
+
+
+
