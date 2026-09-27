@@ -1,0 +1,12 @@
+Speech-to-Text can produce both literal and normalized text. 
+Literal transcription represents the spoken words closely, 
+while normalized text converts certain expressions into a more standard written form, such as changing “twenty five” into “25.”
+
+The service also supports profanity filtering. 
+When profanity is detected, you can choose how it appears in the output. 
+Remove replaces the profanity with asterisks, 
+Mask also hides the word but keeps its first letter, 
+and Tag keeps the original word while adding a tag to indicate that it is profanity.
+
+Key idea:
+Normalization changes the representation of the text; profanity filtering controls how inappropriate words appear in the output.
