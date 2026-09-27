@@ -1,0 +1,452 @@
+============================================================OCI Generative AI============================================================
+The OCI Generative AI dashboard provides several tools for working with foundation and custom models.
+
+You can access the service from the OCI Console through Analytics & AI → AI Services → Generative AI.
+
+The dashboard includes documentation, a service tour, a playground, dedicated AI clusters, custom models, and endpoints.
+
+The Playground is a visual interface that allows you to experiment with hosted pretrained or custom models without writing code. 
+You can test different use cases, refine your prompts and available model parameters, and see the generated responses. 
+Once you are satisfied with the result, you can view the generated code and use it as a starting point for integrating Generative AI into your application.
+
+A Dedicated AI Cluster provides GPU-based compute resources for workloads such as fine-tuning and hosting fine-tuned models.
+
+A Custom Model is a model created by fine-tuning a pretrained foundation model with your own dataset.
+
+An Endpoint is the access point through which an application can send inference requests to a hosted model.
+
+So the concepts are:
+
+Playground → experiment without code
+Dedicated AI Cluster → GPU compute resources
+Fine-tuning → customize a pretrained model
+Custom Model → the resulting fine-tuned model
+Endpoint → access the hosted model for inference
+
+And if the dashboard shows no custom models, endpoints, or dedicated clusters, that can simply mean that no fine-tuning or dedicated cluster has been created yet.
+
+*******************Embeddings
+Embeddings are numerical representations of text. An embedding model takes a piece of text and converts it into a vector of numbers. 
+For example, an embedding might contain hundreds of dimensions, such as 384 dimensions. 
+Each dimension is just a numerical value, and the complete vector represents information about the meaning of the text.
+
+The main reason we use embeddings is to make semantic search possible. Semantic search focuses on the meaning of the text rather than only looking for matching words.
+
+This is different from lexical search. Lexical search mainly looks for the same words or terms. 
+For example, a search for “technical skills” may look for documents containing those exact words. 
+Semantic search can understand that “technical skills,” “professional abilities,” and “developing expertise” may have similar meanings, even though the words are different.
+
+The HR Help Center example contains many articles. Each article is converted into an embedding. 
+The embeddings can then be compared numerically. When embeddings are close to each other in the vector space, the corresponding texts are usually semantically similar.
+
+The demonstration shows these embeddings as points on a two-dimensional graph. The real embeddings may have hundreds of dimensions, 
+but a two-dimensional graph is easier for humans to visualize. The visualization shows that articles about technical skills, 
+career development, and business skills can appear close together because their meanings are related. 
+Other articles about vacation, leave, or time cards may form another group.
+
+These groups are called clusters. A cluster is a group of data points whose embeddings are similar or close to each other.
+
+Now imagine that a user asks:
+
+“How can I improve my skills?”
+
+The question is also converted into an embedding. 
+The system compares the query embedding with the embeddings of the HR articles. 
+It finds the articles whose vectors are closest to the query vector and returns them as relevant results.
+
+So the overall process is:
+
+Text
+ ↓
+Embedding Model
+ ↓
+Vector of Numbers
+ ↓
+Vector Similarity
+ ↓
+Semantic Search
+ ↓
+Relevant Documents
+
+This concept is also very important for RAG. In a RAG system, documents are converted into embeddings and stored in a vector database.
+When a user asks a question, the question is converted into an embedding, and semantic search finds the most relevant documents. 
+Those documents are then provided to the LLM so it can generate a grounded answer.
+
+So remember the complete connection:
+
+Documents
+   ↓
+Embeddings
+   ↓
+Vector Database
+   ↓
+Semantic Search
+   ↓
+Relevant Documents
+   ↓
+LLM
+   ↓
+Answer
+
+The key idea is:
+Embeddings represent meaning as numbers, and semantic search uses the similarity between those numerical representations to find text with similar meaning.
+
+
+
+============================================================VECTOR Search============================================================
+AI Vector Search is built into Oracle Database 23ai. It allows the database to work with vector embeddings and perform similarity searches based on 
+the semantic meaning of data.
+
+A vector embedding is a numerical representation of text, images, or other data. For example, an image can be passed through an embedding model,
+which produces a vector such as:
+
+[0.21, -0.45, 0.73, 0.18, ...]
+
+Oracle Database 23ai provides a VECTOR datatype for storing these embeddings directly in database tables.
+
+Oracle also provides SQL support for generating vectors and performing similarity searches. This means that the database can become
+an important part of a modern GenAI or RAG pipeline.
+
+Oracle Database 23ai is also a converged database. Instead of being designed only for one type of data, it supports multiple data 
+types and workloads, including relational data, JSON, XML, graph, spatial data, text, and vectors. This is useful because enterprise 
+GenAI applications often need to work with different types of data at the same time.
+
+Oracle provides the VECTOR_EMBEDDING function to generate an embedding using an embedding model. The model can be accessed through an API, 
+or a model can be loaded into the database. In the example from the lesson, a ResNet-50 model is loaded into the database and used with an image.
+
+The process is:
+
+Query Image
+     ↓
+ResNet-50 Model
+     ↓
+VECTOR_EMBEDDING
+     ↓
+Query Vector
+
+The database may already contain embeddings for many other images:
+
+Image A → Vector A
+Image B → Vector B
+Image C → Vector C
+Image D → Vector D
+
+The query image is converted into its own vector, and AI Vector Search compares that vector with the stored vectors. 
+The database can then return the images whose vectors are most similar to the query vector.
+
+So the idea is:
+
+Query Vector
+     ↓
+Similarity Search
+     ↓
+Compare with stored vectors
+     ↓
+Find closest vectors
+     ↓
+Return top matching results
+
+Oracle also provides approximate vector search indexes that are designed to make similarity searches efficient, 
+especially when the database contains a very large number of vectors. Instead of performing an expensive comparison against every vector,
+approximate nearest-neighbor techniques can find very close matches much more efficiently.
+
+Another important feature is the VECTOR datatype. A table can contain normal relational columns together with a vector column:
+
+ID | Text | Embedding
+
+The vector dimension can be specified, or a simpler VECTOR specification can be used. This provides flexibility as embedding models evolve
+and new models with different vector dimensions become available.
+
+The overall concept is:
+
+Data
+ ↓
+Embedding Model
+ ↓
+VECTOR_EMBEDDING
+ ↓
+Vector
+ ↓
+VECTOR column
+ ↓
+Oracle AI Vector Search
+ ↓
+Similarity Search
+ ↓
+Relevant Results
+
+And this connects directly to RAG:
+
+Documents
+     ↓
+Embeddings
+     ↓
+Oracle VECTOR columns
+     ↓
+AI Vector Search
+     ↓
+Relevant Documents
+     ↓
+LLM
+     ↓
+Grounded Answer
+
+So the key idea is that Oracle Database 23ai can store vectors, 
+generate vectors, and search vectors based on similarity, while keeping those vectors alongside the organization's other relational and enterprise data.
+
+****************************************************************************************************************************************************
+
+The next step after storing vector embeddings is to search for similar vectors. 
+Oracle provides the VECTOR_DISTANCE function to calculate the distance between two vectors. 
+The important idea is that a smaller distance means that the vectors are more similar.
+
+Smaller Distance → More Similar
+Larger Distance  → Less Similar
+
+Oracle uses COSINE as the default distance metric in this lesson, but the distance metric can be changed. 
+The appropriate metric should be selected based on the model that generated the embeddings.
+
+Once the database contains vector embeddings, we can use Vector Search directly in SQL. 
+For example, we could compare a candidate's resume embedding with job-position embeddings and return the top ten positions 
+that are semantically similar to the resume while also filtering the results by the candidate's preferred cities.
+
+This is important because the query can combine normal relational data with AI Vector Search. The application does not need to perform these operations separately.
+
+Oracle also provides Vector Indexes to make similarity searches more efficient. 
+A Vector Index is created similarly to other database indexes, but it is designed for vector similarity search. 
+Vector indexes are important not only for performance, but also because they can control the quality of approximate search results.
+
+Oracle provides different index organization approaches. If the index can fit in memory, it can use an In-Memory Neighbor Graph. 
+If it does not fit in memory, Neighbor Partitions can be used.
+
+For approximate similarity search, we can use the APPROXIMATE keyword. Approximate search uses a vector index to find very similar results efficiently 
+instead of performing a complete exact search over all vectors.
+
+The TARGET ACCURACY setting controls the desired accuracy of approximate search results. 
+For example, if the target accuracy is 80% and we request the top five results, the course uses the example of approximately 
+four out of five results being correct compared with the exact results.
+
+However, Oracle does not have to use the vector index for every query. If there is no suitable vector index, 
+an exact search can be used. Also, the Cost-Based Optimizer can decide that using the index would be too expensive and choose another execution plan.
+
+One important capability of Oracle Database 23ai is combining Vector Search with SQL JOINs. Enterprise data is usually normalized and 
+stored across multiple tables. For example, we might have Author, Books, and Pages tables.
+
+Each page can contain its own text embedding. We can take a user's text query, convert it into an embedding called qVec, 
+and search the page embeddings for similar text. At the same time, we can join the tables and apply normal SQL conditions, 
+such as selecting only fiction books whose authors are from India.
+
+The query can therefore combine:
+
+Vector Similarity
+      +
+SQL JOINs
+      +
+SQL Filters
+      +
+Top-K Results
+
+This is very useful for enterprise applications because the data required for a useful answer is often distributed across multiple relational tables.
+
+AI Vector Search can also be part of a complete GenAI pipeline. The original data can come from many sources, such as databases, CSV files, documents, or other data sources.
+
+The data can first be loaded using a document loader. It can then be transformed, summarized, or split into smaller chunks. 
+Each chunk can be converted into an embedding using an embedding model, and those embeddings can be stored in the vector database.
+
+The overall process is:
+
+Data Sources
+     ↓
+Document Loader
+     ↓
+Transform / Split into Chunks
+     ↓
+Embedding Model
+     ↓
+Vector Embeddings
+     ↓
+Oracle Database
+     ↓
+Vector Search
+     ↓
+Relevant Information
+
+When a user asks a question, the question can also be converted into an embedding. Vector Search retrieves the most relevant pieces of information. 
+This retrieval step can then be combined with an LLM using the RAG pattern.
+
+User Query
+     ↓
+Query Embedding
+     ↓
+Vector Search
+     ↓
+Relevant Documents
+     ↓
+LLM
+     ↓
+Grounded Answer
+
+Oracle also provides integration with third-party frameworks such as LangChain and LlamaIndex, allowing developers to build more sophisticated 
+GenAI applications while using Oracle Database 23ai as part of the data and vector layer.
+
+The main advantage of Oracle's approach is that AI Vector Search is integrated directly into the database. 
+A single SQL-based solution can combine relational data, JSON, text, spatial data, graph data, machine learning capabilities, and vector similarity search.
+
+So the main idea of this lesson is:
+
+Oracle Database 23ai can perform vector similarity search directly on enterprise data, combine that search with 
+normal SQL operations such as JOINs and filters, and use the results as part of a complete GenAI or RAG pipeline.
+
+
+============================================================select AI ============================================================
+Select AI → Natural Language to SQL
+AI Profile → configuration for LLM/provider + database objects
+LLM → generates SQL based on question + database context
+Database Metadata → helps LLM understand schemas/tables/views
+SHOWSQL → shows generated SQL
+APEX → application/UI layer
+OCI Generative AI → can provide LLM capabilities
+Pluggability → ability to choose different model/provider
+Natural Language Query → ask questions without knowing SQL/schema
+Security → enterprise data protection within OCI tenancy when using the described OCI setup
+
+
+
+Select AI is a capability in Oracle Autonomous Database that allows users to ask questions about their 
+business data using natural language instead of writing SQL manually.
+
+Normally, to query a database, you need to understand the database schema, table names, column names, 
+relationships, joins, filters, and SQL syntax. With Select AI, the user can simply ask a question such as:
+
+“What are the top 10 streamed movies?”
+
+The overall process is:
+
+Natural Language Question
+          ↓
+       Select AI
+          ↓
+          LLM
+          ↓
+     Generated SQL
+          ↓
+   Oracle Database
+          ↓
+      Result Set
+
+The important point is that the LLM does not replace the database. The LLM helps generate the SQL, 
+and the Oracle Database executes that SQL and returns the results.
+
+Select AI uses an AI Profile to make this process work. The AI Profile defines important configuration such as 
+which LLM provider and model should be used and which database schemas, tables, or views should participate in the process.
+
+This is important because a general LLM does not automatically know an organization's private database. 
+The model needs information about the relevant database objects so that it can understand the user's question and generate an appropriate SQL statement.
+
+The process can be viewed as:
+
+User Question
+      +
+Database Metadata
+      +
+AI Profile / Model Configuration
+      ↓
+Optimized Prompt
+      ↓
+LLM
+      ↓
+Generated SQL
+      ↓
+Oracle Database
+      ↓
+Result Set
+
+Select AI can also show the SQL that it generated. This is done using SHOWSQL. 
+This allows developers or database professionals to review the generated query and verify that it uses the correct tables, joins, filters, and logic.
+
+For example:
+
+User:
+"Find the top customer segments for George Clooney movies."
+
+              ↓
+
+Select AI
+
+              ↓
+
+Generated SQL
+
+              ↓
+
+Oracle Database
+
+              ↓
+
+Result
+
+This is especially useful because AI-generated SQL should be reviewed when accuracy and business logic are important.
+
+Select AI can also be integrated into applications built with Oracle APEX. In an APEX application,
+a user can enter a natural-language question, Select AI can generate the SQL, 
+Oracle can execute it, and APEX can display the results using reports, filters, charts, or other application features.
+
+Another important concept is pluggability. Select AI is not permanently tied to one LLM provider. 
+Depending on the configuration and use case, different providers and models can be used, 
+such as OCI Generative AI, Cohere, OpenAI, or Llama-based models. This also allows organizations to use newer or fine-tuned models as their requirements evolve.
+
+Security is also important for enterprise use. With Autonomous Select AI and OCI Generative AI in the described OCI setup, 
+enterprise data can remain within the organization's OCI tenancy rather than being sent to an unrelated external LLM provider or exposed to other customers.
+
+The key difference between Select AI and AI Vector Search is:
+
+Select AI:
+Natural Language
+      ↓
+LLM
+      ↓
+SQL
+      ↓
+Database Result
+
+
+AI Vector Search:
+Data
+ ↓
+Embeddings
+ ↓
+Vector Search
+ ↓
+Similar / Relevant Data
+
+So the main idea of this lesson is:
+
+Select AI provides a natural-language interface to Oracle Database. It uses an LLM to understand the user's intent and generate SQL,
+while Oracle Database remains responsible for executing the SQL and returning the actual business data.
+
+And the most important exam sentence is:
+
+Select AI translates natural-language questions into SQL using an LLM and database metadata,
+allowing users to query Oracle Database without needing to know the underlying schema or SQL syntax.
+
+
+============================================================QUESTIONS============================================================
+ Correct. To visually explore and test pre-trained and fine-tuned models without writing code
+Explanation: The OCI Playground allows users to test prompts, refine parameters, and experiment with models before integrating them into applications, all without writing code.
+
+Correct. Dedicated AI Cluster 
+Explanation: Dedicated AI Clusters provide GPU-based compute resources required to fine-tune a pre-trained model for specific tasks like customer support.
+
+Correct. To host and serve fine-tuned models for inference
+Explanation: Model endpoints allow deployed models to be accessed via an API for real-time inference, making them available for AI applications.
+
+ Correct. Chat models generate text, while embedding models convert text into numerical representations. 
+Explanation: Chat models generate human-like responses, while embedding models convert text into vectors for semantic search and similarity analysis.
+
+Correct. VECTOR datatype
+Explanation: The VECTOR datatype in Oracle Database 23ai is specifically designed to store embeddings for AI Vector Search. This datatype allows efficient storage and retrieval of high-dimensional numerical representations of data, enabling similarity searches for AI and machine learning applications.
+
+
+
+
+
