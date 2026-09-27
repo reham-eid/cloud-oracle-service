@@ -1,0 +1,220 @@
+=======================================================================AI Services=======================================================================
+
+=======================================================================ML Services=======================================================================
+
+====================================================================AI Infrastructure====================================================================
+
+===============================================================GPU & Superclasters in OCI================================================================
+
+   GPU Node 1                  GPU Node 2
+┌───────────────┐           ┌───────────────┐
+│ GPU GPU GPU GPU│           │ GPU GPU GPU GPU│
+│ GPU GPU GPU GPU│           │ GPU GPU GPU GPU│
+│   8 GPUs       │           │   8 GPUs       │
+└───────┬───────┘           └───────┬───────┘
+        │                            │
+        └──────── Network Fabric ────┘
+
+A GPU node is basically a server that contains several GPUs. 
+In this example, we have two GPU nodes, and each node contains eight NVIDIA A100 GPUs. So, in total, we have 16 GPUs.
+
+The GPUs inside the same node need to communicate with each other very quickly. 
+This is where NVIDIA NVLink comes in. 
+NVLink is a high-speed interconnect that allows GPUs inside a node to exchange data efficiently.
+
+NVLink = high-speed GPU interconnect inside the server/node.
+Network Fabric = high-speed network connecting GPU nodes.
+
+Now, we have two separate GPU nodes, so we also need a way to connect the nodes together. This is the role of the network fabric.
+
+You can think of the network fabric as a high-speed communication system connecting the GPU nodes. In this example, 
+each GPU node connects to the network fabric with 1.6 terabits per second, which is 1,600 gigabits per second.
+
+Since each node contains eight GPUs, the course explains the bandwidth proportionally:
+
+1,600 Gbps ÷ 8 GPUs = 200 Gbps per GPU.
+
+So the idea is that each GPU has approximately 200 Gbps of proportional bandwidth in this simplified example.
+
+The network fabric is also described as nonblocking. This means that the network is designed with enough capacity so that multiple GPUs can communicate
+at the same time without the network fabric becoming a bottleneck under the intended traffic pattern.
+
+This is especially important for large AI and deep learning workloads. A large AI model may use many GPUs at the same time. 
+These GPUs need to exchange data, parameters, and intermediate results. If the communication between GPUs is slow, 
+the GPUs may spend time waiting for data instead of performing computations.
+
+**So the overall picture is:
+
+GPU node → contains 8 GPUs
+NVLink → connects GPUs inside the node
+Network fabric → connects GPU nodes
+1.6 Tbps → bandwidth from each node to the fabric
+Nonblocking → allows concurrent GPU communication without the fabric becoming the bottleneck
+
+And this is the infrastructure that allows large AI workloads, such as training and running large models, to use many GPUs together efficiently.
+
+**************Supercluster**************
+A Supercluster is a much larger GPU environment than a normal cluster. It can contain tens of thousands of GPUs, 
+and the architecture can potentially scale beyond 100,000 GPUs.
+
+Because the number of GPUs is so large, the Supercluster is divided into blocks. Each block contains a group of GPUs and its networking infrastructure.
+
+To connect these large numbers of GPUs efficiently, the system uses a three-tier CLOS network. 
+CLOS is a scalable network design that uses multiple layers of switches instead of requiring every GPU to have a direct connection to every other GPU.
+
+GPU A ──┐
+GPU B ──┼── Switch ── Switch ── GPU X
+GPU C ──┘                   └── GPU Y
+
+
+The benefit is scalability. However, there is a trade-off: 
+when a GPU in Block 1 communicates with a GPU in a distant Block N, 
+the traffic may pass through more network components and travel a longer physical distance. Therefore, the latency is higher.
+
+Inside one block, the round-trip latency in the example is about 6.5 microseconds. 
+Across the large Supercluster, the worst-case round-trip latency can be around 20 microseconds.
+
+20 microseconds is still very small, but the higher latency needs to be considered when designing the network. 
+This is why the network uses appropriate buffering and QoS (Quality of Service) mechanisms.
+
+QoS = managing network traffic to maintain the required service/performance.
+
+Buffers temporarily hold packets when traffic is waiting to move through the network. 
+The switches and networking chips are selected with enough buffering, and the buffers are properly allocated for the GPU workloads.
+
+This becomes especially important because the Supercluster is designed to support RDMA, or Remote Direct Memory Access. 
+RDMA is used for high-performance communication between systems, which is very important for large AI workloads where GPUs exchange large amounts of data.
+
+The key concept is lossless networking. In a lossless network, the switches are designed to avoid dropping packets because of congestion. 
+The network uses sufficient buffering and intelligent congestion-notification mechanisms to control traffic and prevent packet loss.
+
+So the complete idea is:
+
+             SUPERCLUSTER
+                  │
+          Thousands of GPUs
+                  │
+                  ▼
+            CLOS Network
+       "How is the network built?"
+                  │
+                  ▼
+          Network gets traffic
+                  │
+                  ▼
+                QoS
+       "How do we manage traffic?"
+                  │
+                  ▼
+             Congestion
+                  │
+                  ▼
+       Buffers + congestion control
+                  │
+                  ▼
+          LOSSLESS NETWORK
+       "Don't drop the packets"
+
+Supercluster → Blocks → Three-tier CLOS → Higher physical distance and latency → Proper buffering + QoS → Lossless networking → High-performance RDMA communication.
+
+*********Control Plane*********
+OCI uses a control plane to decide where a customer's workload should run. This decision is called placement.
+
+If a workload is small enough to fit inside one block, the control plane can place the entire workload in a single block. 
+This keeps the GPUs or compute nodes closer together and provides lower latency.
+
+If the workload is much larger and requires more capacity than one block can provide, it can be placed across multiple blocks. 
+This provides the required scale, but communication may have higher latency.
+
+So the key idea is:
+
+Small workload → Single Block → Lower latency
+Large workload → Multiple Blocks → Greater scale
+
+And:
+
+Control Plane → decides the placement
+
+The overall goal is to balance scale and latency through intelligent workload placement.
+
+*********Network locality*********
+Network locality means understanding which GPUs or hosts are close to each other in the network.
+
+In this example, there are eight hosts connected through four Top-of-Rack (ToR) switches across two different blocks. 
+If the workload does not know anything about the network topology, any GPU could communicate with any other GPU. 
+Some of these communications might travel across longer network paths, which increases latency.
+
+OCI makes this network locality information available to customers. 
+The customer can use this information as placement hints when designing the GPU or ML topology.
+
+For example, the customer can organize the workload so that some GPU communication stays on the same ToR switch. 
+In the example, about half of the traffic stays local to the ToR switch. 
+Around 85% of the traffic stays within the same block, and only a smaller portion crosses between blocks.
+
+This is important because communication within the same ToR can have extremely low latency. 
+The example says that about half of the traffic can have latency below 6.5 microseconds, 
+while only some traffic needs to use the longer paths with around 20-microsecond worst-case latency.
+
+Network locality also provides another benefit: higher throughput.
+
+A flow is a stream of network traffic between two endpoints. 
+A flow collision happens when multiple flows need to use the same network link at the same time, creating contention.
+
+If most traffic stays local, fewer flows need to travel through shared links in the higher levels of the network. 
+Therefore, the probability of flow collisions is reduced.
+
+So network locality provides two major benefits:
+
+Locality → shorter network paths → lower latency
+and
+Locality → fewer shared-link collisions → higher throughput
+
+The main idea is that OCI does not only provide a huge GPU Supercluster. 
+It also exposes information about the network topology so customers can design their workloads to communicate locally whenever possible.
+
+in summary:
+
+                 SUPERCLUSTER
+                       │
+             Three-Tier CLOS
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+        ▼              ▼              ▼
+   Tuned Buffers    Placement    Placement Hints
+        │              │              │
+        ▼              ▼              ▼
+   Avoid Packet     Keep nodes    Workload uses
+      Drops         close         locality
+        │              │              │
+        ▼              ▼              ▼
+    LOSSLESS       LOW LATENCY    LOW LATENCY
+                       │              │
+                       └──────┬───────┘
+                              ▼
+                     Fewer Flow Collisions
+                              │
+                              ▼
+                       HIGHER THROUGHPUT
+
+What are the key optimizations?
+1. Buffers : Tuned buffers → Lossless
+2. Placement : Place resources close → Lower latency + higher throughput
+3. Placement Hints : Expose locality → Workload can optimize communication → Lower latency + higher throughput
+
+
+Model Deployments
+Explanation: Model Deployments in OCI Data Science enable you to deploy your machine learning models as HTTP endpoints, 
+making them accessible for real-time predictions and inferences. You can easily deploy, manage, and scale these models on fully managed infrastructure. 
+Model Deployments are a key component for operationalizing your machine learning models and integrating them into your applications or services.
+
+======================================================================Responsible AI======================================================================
+
+
+
+
+
+
+
+
+
