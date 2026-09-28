@@ -5,6 +5,14 @@
 ====================================================================AI Infrastructure====================================================================
 
 ===============================================================GPU & Superclasters in OCI================================================================
+NVIDIA is a company that's design and produce GPUs (Graphics Processing Units).
+it basically used for gaming but also can be used for :
+AI Training
+AI Inference
+Deep Learning
+Generative AI
+HPC = High Performance Computing
+
 
    GPU Node 1                  GPU Node 2
 ┌───────────────┐           ┌───────────────┐
