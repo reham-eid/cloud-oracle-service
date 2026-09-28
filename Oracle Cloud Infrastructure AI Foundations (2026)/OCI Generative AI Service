@@ -368,21 +368,13 @@ For example:
 
 User:
 "Find the top customer segments for George Clooney movies."
-
               ↓
-
 Select AI
-
               ↓
-
 Generated SQL
-
               ↓
-
 Oracle Database
-
               ↓
-
 Result
 
 This is especially useful because AI-generated SQL should be reviewed when accuracy and business logic are important.
@@ -429,6 +421,7 @@ And the most important exam sentence is:
 Select AI translates natural-language questions into SQL using an LLM and database metadata,
 allowing users to query Oracle Database without needing to know the underlying schema or SQL syntax.
 
+Select AI enhancement:It allows users to interact with Autonomous Database using natural language instead of having to write SQL or understand the database schema.
 
 ============================================================QUESTIONS============================================================
  Correct. To visually explore and test pre-trained and fine-tuned models without writing code
