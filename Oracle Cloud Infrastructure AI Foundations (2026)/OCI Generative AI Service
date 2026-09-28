@@ -458,3 +458,16 @@ Embedding
 VECTOR column
      ↓
 Vector Search
+
+****************************************
+fine tuning vs T-Few fine tuning?
+
+Fine-tuning adapts a pretrained foundation model to a specific task or domain using additional training data. 
+In traditional fine-tuning, many of the model's parameters may be updated, which can require significant computational resources.
+
+T-Few is a parameter-efficient fine-tuning approach. Instead of updating a large portion of the model's parameters, 
+it focuses on updating a smaller subset, making customization more resource-efficient.
+T-Few updates a fraction of the model weights.
+
+Exam clue:
+T-Few → fine-tuning with fewer updated parameters → more efficient.
