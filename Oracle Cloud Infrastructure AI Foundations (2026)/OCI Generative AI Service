@@ -438,8 +438,23 @@ Explanation: Chat models generate human-like responses, while embedding models c
 
 Correct. VECTOR datatype
 Explanation: The VECTOR datatype in Oracle Database 23ai is specifically designed to store embeddings for AI Vector Search. This datatype allows efficient storage and retrieval of high-dimensional numerical representations of data, enabling similarity searches for AI and machine learning applications.
+****************************************
+ONNX in 23ai????????
+ONNX = Open Neural Network Exchange
 
+ONNX = a standard format for machine learning models that can be loaded into Oracle Database and used for inference.
+the fllow
+Model → loaded into database → inference → embeddings/AI processing → Vector Search.
 
-
-
-
+example: we have an external AI Model can recognaize images, this model made by PyTorch framework that Oracle Database doesn't understand
+cat image
+     ↓ 
+ONNX Model
+     ↓    make inference
+Embedding
+     ↓
+[0.21, -0.73, 0.44, ...]
+     ↓
+VECTOR column
+     ↓
+Vector Search
