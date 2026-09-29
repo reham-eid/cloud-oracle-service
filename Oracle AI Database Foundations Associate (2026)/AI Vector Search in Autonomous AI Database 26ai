@@ -1,0 +1,204 @@
+Autonomous AI Database can act as a central environment for managing and accessing different types of business data. 
+The data may include relational data, documents, JSON data, and data coming from other locations or formats, depending on the configured capabilities.
+
+The important idea is that Oracle can combine traditional database processing, vector search, and AI/LLMs in one environment.
+
+1. AI Vector Search
+
+AI Vector Search allows a database to search based on the meaning or semantic similarity of data rather than only matching exact keywords.
+An embedding model converts data such as text or images into a numerical vector:
+
+Data
+ ↓
+Embedding Model
+ ↓
+Vector
+
+2.VECTOR data type
+Oracle AI Database provides the VECTOR data type for storing vector embeddings.
+This means embeddings can be stored directly alongside normal business data.
+
+3. VECTOR_EMBEDDING
+
+The VECTOR_EMBEDDING functionality can be used to generate embeddings.
+
+The conceptual flow is:
+
+Text / Image / Other Data
+          ↓
+    VECTOR_EMBEDDING
+          ↓
+       VECTOR
+          ↓
+Stored in Database
+
+4. VECTOR_DISTANCE
+
+VECTOR_DISTANCE calculates the distance between two vectors.
+
+The basic idea is:
+
+Smaller distance → More similar
+Larger distance  → Less similar
+
+Several distance metrics can be supported, including:
+
+COSINE
+EUCLIDEAN
+EUCLIDEAN_SQUARED
+HAMMING
+MANHATTAN
+DOT
+
+In the course example, COSINE is the default metric.
+
+The appropriate metric depends on the embedding model and use case.
+
+5. Top-K similarity search
+
+Vector Search can return the Top K closest matches to a query vector.
+
+For example, if we request:
+TOP 5
+--the database returns the five closest matching vectors according to the selected similarity/distance calculation.
+
+6. Vector indexes
+
+Searching through a very large number of vectors can be expensive.
+
+A vector index can improve the performance of approximate similarity searches.
+
+The basic idea is:
+
+Large Vector Dataset
+        ↓
+   Vector Index
+        ↓
+Approximate Search
+        ↓
+ Faster Results
+
+The index helps Oracle find likely nearby vectors without necessarily performing the same expensive full comparison against every vector.
+
+
+7. Approximate search
+
+There are two conceptual approaches:
+
+1-Exact search : The system searches the data more exhaustively to obtain an exact result.
+
+All vectors
+   ↓
+Search everything
+   ↓
+Exact result
+
+2-Approximate search : The system uses an index to find highly likely nearest matches more efficiently.
+
+All vectors
+   ↓
+Vector Index
+   ↓
+Likely nearest matches
+   ↓
+Fast result
+
+Therefore, approximate search introduces a trade-off between search speed and accuracy.
+
+8. Target accuracy : The target accuracy controls the desired accuracy level for approximate vector search.
+
+The general principle is:
+
+Higher accuracy target
+        ↓
+Potentially more search work
+        ↓
+Potentially slower search
+
+Lower accuracy target
+        ↓
+Less search work
+        ↓
+Potentially faster search
+
+So:
+Target Accuracy represents an accuracy-versus-performance trade-off for approximate vector search.
+
+
+9. Vector index organization
+
+two possible index organizations:
+
+1-In-memory : If the index can fit into memory, it can be organized in memory for fast access.
+
+2- Partitioned : For larger indexes, the index can be organized into partitions so that the search can operate on appropriate subsets.
+
+The important exam concept is:
+
+Vector indexes improve the performance of approximate vector search.
+The generated vector represents information about the meaning or characteristics of the original data in numerical form.
+
+
+10. Vector Search with relational data: One of the important Oracle AI Database capabilities is that vector search can be combined with normal SQL operations.
+
+A query could ask:
+Find the five books most similar to a particular query, but only consider fiction books written by authors from India.
+
+The database may need to perform:
+
+JOIN
+ +
+WHERE filters
+ +
+Vector similarity
+ +
+TOP-K
+
+So vector search is not isolated from relational database processing.
+
+#########Select AI and Vector Search have different roles.
+
+Select AI provides the natural-language-to-database interaction.
+Vector Search performs semantic similarity searching.
+
+=============Autonomous AI Database as a central data environment=============
+Autonomous AI Database can provide a unified environment for working with different data sources and formats through supported integrations and capabilities.
+
+External Data
+Documents
+JSON
+Relational Data
+Other Sources
+      │
+      ▼
+Autonomous AI Database
+      │
+ ┌────┼─────┐
+ │    │     │
+SQL Vector  AI
+ │    │     │
+ └────┼─────┘
+      ↓
+     LLM
+      ↓
+   Users / Apps
+
+===============================
+1. How do we represent meaning?
+Embedding → VECTOR
+
+2. How do we find similar meaning?
+VECTOR_DISTANCE → Vector Search
+
+3. How do we make vector search faster?
+Vector Index → Approximate Search → Target Accuracy
+
+4. How can a user ask for all of this without manually writing SQL?
+Select AI → LLM → Generated SQL → Oracle Database
+
+
+
+
+
+
+
