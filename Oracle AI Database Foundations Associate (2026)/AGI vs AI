@@ -39,17 +39,30 @@ For example, weather forecasting can use satellite information, historical weath
 
 
 
+AI can be applied to many different domains:
+
+| AI Domain                  | Example                                    |
+| -------------------------- | ------------------------------------------ |
+| **Language**               | English → Spanish translation              |
+| **Computer Vision**        | Classifying or detecting objects in images |
+| **Speech**                 | Text-to-speech or speech-to-text           |
+| **Recommendation**         | Recommending products or movies            |
+| **Anomaly Detection**      | Detecting fraudulent transactions          |
+| **Reinforcement Learning** | Learning through rewards and penalties     |
+| **Forecasting**            | Predicting weather or future trends        |
+| **Generative AI**          | Generating text, images, code, or stories  |
 
 
+What is the system trying to do?
 
-
-
-
-
-
-
-
-
-
+Learn patterns from data → Machine Learning
+Use deep neural networks → Deep Learning
+Understand images → Computer Vision
+Understand/generate language → Language AI / NLP
+Learn from rewards → Reinforcement Learning
+Predict future values/trends → Forecasting
+Detect unusual behavior → Anomaly Detection
+Create new text/images/code → Generative AI
+Perform a broad range of human-like intellectual tasks → AGI concept
 
 
