@@ -1,0 +1,51 @@
+Select AI allows users to ask natural-language questions about business data. 
+An LLM uses the AI Profile and database metadata to understand the user's intent and generate SQL. 
+Oracle Database then executes the generated SQL and returns the actual result.
+Select AI can be used with Oracle's security mechanisms and configured LLM providers.
+
+                  User
+                   │
+                   │ Natural Language
+                   ▼
+              Select AI
+                   │
+                   ▼
+              AI Profile
+             /          \
+            /            \
+     LLM Model       DB Metadata
+            \            /
+             \          /
+              ▼        ▼
+          Understand Question
+                  │
+                  ▼
+          Generate SQL Query
+                  │
+                  ▼
+          Oracle Database
+                  │
+                  ▼
+             Execute SQL
+                  │
+                  ▼
+               Result
+                  │
+                  ▼
+                User
+
+
+Before using Select AI, we configure an AI Profile.
+
+An AI Profile defines the configuration that Select AI uses when processing natural-language questions. 
+It can specify the LLM provider, the LLM model, and the database schemas and objects that should be available for the AI interaction.
+AI Profile
+   │
+   ├── LLM Provider
+   ├── LLM Model
+   └── Database Objects
+        ├── MOVIES
+        ├── ACTORS
+        └── STREAMS
+
+DBMS_CLOUD_AI ->  Oracle provides the DBMS_CLOUD_AI PL/SQL package for configuring Select AI and its AI Profiles.
