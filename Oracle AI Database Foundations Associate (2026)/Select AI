@@ -49,3 +49,4 @@ AI Profile
         └── STREAMS
 
 DBMS_CLOUD_AI ->  Oracle provides the DBMS_CLOUD_AI PL/SQL package for configuring Select AI and its AI Profiles.
+
