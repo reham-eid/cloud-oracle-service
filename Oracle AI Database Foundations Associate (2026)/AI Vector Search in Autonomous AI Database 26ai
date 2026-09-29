@@ -4,7 +4,6 @@ The data may include relational data, documents, JSON data, and data coming from
 The important idea is that Oracle can combine traditional database processing, vector search, and AI/LLMs in one environment.
 
 1. AI Vector Search
-
 AI Vector Search allows a database to search based on the meaning or semantic similarity of data rather than only matching exact keywords.
 An embedding model converts data such as text or images into a numerical vector:
 
@@ -18,8 +17,13 @@ Vector
 Oracle AI Database provides the VECTOR data type for storing vector embeddings.
 This means embeddings can be stored directly alongside normal business data.
 
-3. VECTOR_EMBEDDING
+CREATE TABLE my_images (
+id
+NUMBER,
+data_image BLOB, image_vec VECTOR);
 
+
+3. VECTOR_EMBEDDING
 The VECTOR_EMBEDDING functionality can be used to generate embeddings.
 
 The conceptual flow is:
@@ -33,8 +37,9 @@ Text / Image / Other Data
 Stored in Database
 
 4. VECTOR_DISTANCE
-
 VECTOR_DISTANCE calculates the distance between two vectors.
+
+VECTOR_DISTANCE (VECTOR1, VECTOR2, <optional distance metric>)
 
 The basic idea is:
 
@@ -51,7 +56,6 @@ MANHATTAN
 DOT
 
 In the course example, COSINE is the default metric.
-
 The appropriate metric depends on the embedding model and use case.
 
 5. Top-K similarity search
@@ -63,10 +67,12 @@ TOP 5
 --the database returns the five closest matching vectors according to the selected similarity/distance calculation.
 
 6. Vector indexes
-
 Searching through a very large number of vectors can be expensive.
-
 A vector index can improve the performance of approximate similarity searches.
+
+CREATE VECTOR INDEX photo_idx ON customer (photo_vec)
+ORGANIZATION [INMEMORY NEIGHBOR GRAPH | NEIGHBOR PARTITIONS]
+DISTANCE COSINE | EUCLIDEAN | MANHATTAN | ... WITH TARGET ACCURACY 90
 
 The basic idea is:
 
@@ -82,7 +88,6 @@ The index helps Oracle find likely nearby vectors without necessarily performing
 
 
 7. Approximate search
-
 There are two conceptual approaches:
 
 1-Exact search : The system searches the data more exhaustively to obtain an exact result.
@@ -94,6 +99,12 @@ Search everything
 Exact result
 
 2-Approximate search : The system uses an index to find highly likely nearest matches more efficiently.
+
+Example: Find the top five customers by similarity with a search photo vector:
+SELECT id, name, photo
+FROM Customers
+ORDER BY VECTOR_DISTANCE (photo_vec, :QUERY_VEC) 
+FETCH APPROXIMATE FIRST 5 ROWS ONLY;
 
 All vectors
    ↓
@@ -126,11 +137,9 @@ Target Accuracy represents an accuracy-versus-performance trade-off for approxim
 
 
 9. Vector index organization
-
 two possible index organizations:
 
 1-In-memory : If the index can fit into memory, it can be organized in memory for fast access.
-
 2- Partitioned : For larger indexes, the index can be organized into partitions so that the search can operate on appropriate subsets.
 
 The important exam concept is:
